@@ -8,6 +8,8 @@ namespace KnuthMorrisPratt
     {
         private readonly int[,] _dfa;
         private readonly Dictionary<T, int> _abc;
+
+        private readonly int _startingState = 0;
         private readonly int _finalState;
 
         public Finder(IEnumerable<T> word)
@@ -52,7 +54,7 @@ namespace KnuthMorrisPratt
             using (var e = sequence.Select(c => _abc[c])
                                    .GetEnumerator())
             {
-                int state = 0;
+                int state = _startingState;
                 while (e.MoveNext())
                 {
                     state = _dfa[e.Current, state];
