@@ -17,26 +17,31 @@ namespace KnuthMorrisPratt
             _finalState = pattern.Length;
 
             _abc = pattern.Distinct()
-                          .Select((v, i) => new { v, i })
-                          .ToDictionary(o => o.v, o => o.i);
+                          .Select((value, index) => new { value, index })
+                          .ToDictionary(o => o.value, o => o.index);
 
-            _dfa = new int[_abc.Count, pattern.Length]; 
+            _dfa = new int[_abc.Count, pattern.Length + 1]; 
 
             _dfa[0, 0] = 1;
 
-            for (int i = 0, j = 1; j < pattern.Length; i = _dfa[AbcIndex(pattern[j++]), i])
+            int i = 0, j = 1;
+            while (j < pattern.Length)
             {
-                for (int c = 0; c < _abc.Count; c++)
-                    _dfa[c, j] = _dfa[c, i];
-                _dfa[AbcIndex(pattern[j]), j] = j + 1;
+                i = _dfa[_abc[pattern[j++]], i];
+
+                Copy(from: i, to: j);
+
+                _dfa[_abc[pattern[j]], j] = j + 1;
             }
+
+            Copy(from: i, to: j);
         }
 
         public int FindIn(IEnumerable<T> sequence)
         {
             var state = 0;
-            foreach (var o in sequence.Select(AbcIndex)
-                                      .Select((c, i) => new { c, i }))
+            foreach (var o in SelectAbcIndexesFrom(sequence)
+                                        .Select((c, i) => new { c, i }))
             {
                 state = _dfa[o.c, state];
                 if (state == _finalState)
@@ -48,18 +53,34 @@ namespace KnuthMorrisPratt
 
         public int FindLastIn(IEnumerable<T> sequence)
         {
-            throw new NotImplementedException();
+            var last = -1;
+            var state = 0;
+            foreach (var o in SelectAbcIndexesFrom(sequence)
+                                        .Select((c, i) => new { c, i }))
+            {
+                state = _dfa[o.c, state];
+                if (state == _finalState)
+                    last = o.i - _finalState + 1;
+            }
+
+            return last;
         }
 
         public IEnumerable<int> FindAllIn(IEnumerable<T> sequence)
         {
-            throw new NotImplementedException();
+            var state = 0;
+            foreach (var o in SelectAbcIndexesFrom(sequence)
+                                        .Select((c, i) => new { c, i }))
+            {
+                state = _dfa[o.c, state];
+                if (state == _finalState)
+                    yield return o.i - _finalState + 1;
+            }
         }
 
         public bool ExistsIn(IEnumerable<T> sequence)
         {
-            using (var e = sequence.Select(AbcIndex)
-                                   .GetEnumerator())
+            using (var e = SelectAbcIndexesFrom(sequence).GetEnumerator())
             {
                 int state = 0;
                 while (e.MoveNext())
@@ -72,9 +93,15 @@ namespace KnuthMorrisPratt
             }
         }
 
-        private int AbcIndex(T c)
+        private void Copy(int from, int to)
         {
-            return _abc[c];
+            for (int c = 0; c < _abc.Count; c++)
+                _dfa[c, to] = _dfa[c, from];
+        }
+
+        private IEnumerable<int> SelectAbcIndexesFrom(IEnumerable<T> sequence)
+        {
+            return sequence.Select(c => _abc[c]);
         }
     }
 }
