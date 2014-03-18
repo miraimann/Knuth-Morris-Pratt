@@ -49,7 +49,18 @@ namespace KnuthMorrisPratt
 
         public bool ExistsIn(IEnumerable<T> sequence)
         {
-            throw new NotImplementedException();
+            using (var e = sequence.Select(c => _abc[c])
+                                   .GetEnumerator())
+            {
+                int state = 0;
+                while (e.MoveNext())
+                {
+                    state = _dfa[e.Current, state];
+                    if (state == _finalState) return true;
+                }
+
+                return false;
+            }
         }
     }
 }
