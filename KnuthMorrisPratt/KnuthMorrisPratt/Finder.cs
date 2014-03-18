@@ -8,22 +8,25 @@ namespace KnuthMorrisPratt
     {
         private readonly T[] _pattern;
         private readonly int[,] _dfa;
+        private readonly Dictionary<T, int> _abc;
 
         public Finder(IEnumerable<T> word)
         {
             _pattern = word as T[] ?? word.ToArray();
-            
-            var abc = _pattern.Distinct().ToList();
 
-            _dfa = new int[abc.Count, _pattern.Length]; 
+            _abc = _pattern.Distinct()
+                           .Select((v, i) => new { v, i })
+                           .ToDictionary(o => o.v, o => o.i);
+
+            _dfa = new int[_abc.Count, _pattern.Length]; 
 
             _dfa[0, 0] = 1;
 
-            for (int x = 0, j = 1; j < _pattern.Length; x = _dfa[abc.IndexOf(_pattern[j++]), x])
+            for (int i = 0, j = 1; j < _pattern.Length; i = _dfa[_abc[_pattern[j++]], i])
             {
-                for (int c = 0; c < abc.Count; c++)
-                    _dfa[c, j] = _dfa[c, x];
-                _dfa[abc.IndexOf(_pattern[j]), j] = j + 1;
+                for (int c = 0; c < _abc.Count; c++)
+                    _dfa[c, j] = _dfa[c, i];
+                _dfa[_abc[_pattern[j]], j] = j + 1;
             }
         }
 
