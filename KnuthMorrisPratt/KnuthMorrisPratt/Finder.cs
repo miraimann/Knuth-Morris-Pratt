@@ -27,12 +27,13 @@ namespace KnuthMorrisPratt
             int i = 0, j = 1;
             while (j < pattern.Length)
             {
-                i = _dfa[_abc[pattern[j++]], i];
-
                 Copy(from: i, to: j);
 
                 _dfa[_abc[pattern[j]], j] = j + 1;
+
+                i = _dfa[_abc[pattern[j++]], i];
             }
+            
 
             Copy(from: i, to: j);
         }
