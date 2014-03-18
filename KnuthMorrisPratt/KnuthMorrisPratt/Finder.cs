@@ -8,8 +8,6 @@ namespace KnuthMorrisPratt
     {
         private readonly int[,] _dfa;
         private readonly Dictionary<T, int> _abc;
-
-        private readonly int _startingState = 0;
         private readonly int _finalState;
 
         public Finder(IEnumerable<T> word)
@@ -26,17 +24,26 @@ namespace KnuthMorrisPratt
 
             _dfa[0, 0] = 1;
 
-            for (int i = 0, j = 1; j < pattern.Length; i = _dfa[_abc[pattern[j++]], i])
+            for (int i = 0, j = 1; j < pattern.Length; i = _dfa[AbcIndex(pattern[j++]), i])
             {
                 for (int c = 0; c < _abc.Count; c++)
                     _dfa[c, j] = _dfa[c, i];
-                _dfa[_abc[pattern[j]], j] = j + 1;
+                _dfa[AbcIndex(pattern[j]), j] = j + 1;
             }
         }
 
         public int FindIn(IEnumerable<T> sequence)
         {
-            throw new NotImplementedException();
+            var state = 0;
+            foreach (var o in sequence.Select(AbcIndex)
+                                      .Select((c, i) => new { c, i }))
+            {
+                state = _dfa[o.c, state];
+                if (state == _finalState)
+                    return o.i - _finalState + 1;
+            }
+
+            return -1;
         }
 
         public int FindLastIn(IEnumerable<T> sequence)
@@ -51,10 +58,10 @@ namespace KnuthMorrisPratt
 
         public bool ExistsIn(IEnumerable<T> sequence)
         {
-            using (var e = sequence.Select(c => _abc[c])
+            using (var e = sequence.Select(AbcIndex)
                                    .GetEnumerator())
             {
-                int state = _startingState;
+                int state = 0;
                 while (e.MoveNext())
                 {
                     state = _dfa[e.Current, state];
@@ -63,6 +70,11 @@ namespace KnuthMorrisPratt
 
                 return false;
             }
+        }
+
+        private int AbcIndex(T c)
+        {
+            return _abc[c];
         }
     }
 }
