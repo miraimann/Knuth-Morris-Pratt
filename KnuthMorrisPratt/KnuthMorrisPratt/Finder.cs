@@ -5,6 +5,11 @@ namespace KnuthMorrisPratt
 {
     internal class Finder<T> : IFinder<T>
     {
+        public Finder(IEnumerable<T> word)
+        {
+            throw new NotImplementedException();
+        }
+
         public int FindIn(IEnumerable<T> sequence)
         {
             throw new NotImplementedException();
