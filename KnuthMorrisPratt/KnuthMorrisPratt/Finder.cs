@@ -10,28 +10,28 @@ namespace KnuthMorrisPratt
         private readonly Dictionary<T, int> _abc;
         private readonly int _finalState;
 
-        public Finder(IEnumerable<T> word)
+        public Finder(IEnumerable<T> pattern)
         {
-            var pattern = word as T[] ?? word.ToArray();
+            var p = pattern as T[] ?? pattern.ToArray();
 
-            _finalState = pattern.Length;
+            _finalState = p.Length;
 
-            _abc = pattern.Distinct()
-                          .Select((value, index) => new { value, index })
-                          .ToDictionary(o => o.value, o => o.index);
+            _abc = p.Distinct()
+                    .Select((value, index) => new { value, index })
+                    .ToDictionary(o => o.value, o => o.index);
 
-            _dfa = new int[_abc.Count, pattern.Length + 1]; 
+            _dfa = new int[_abc.Count, p.Length + 1]; 
 
             _dfa[0, 0] = 1;
 
             int i = 0, j = 1;
-            while (j < pattern.Length)
+            while (j < p.Length)
             {
                 Copy(from: i, to: j);
 
-                _dfa[_abc[pattern[j]], j] = j + 1;
+                _dfa[_abc[p[j]], j] = j + 1;
 
-                i = _dfa[_abc[pattern[j++]], i];
+                i = _dfa[_abc[p[j++]], i];
             }
             
 

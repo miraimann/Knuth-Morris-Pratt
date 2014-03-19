@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnuthMorrisPratt", "KnuthMo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnuthMorrisPratt.Dbg", "KnuthMorrisPratt.Dbg\KnuthMorrisPratt.Dbg.csproj", "{48D3FEAB-4CCC-4815-A3A0-7E1EC046975A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnuthMorrisPratt.Tests", "KnuthMorrisPratt.Tests\KnuthMorrisPratt.Tests.csproj", "{7A920E2B-10D0-4910-9A78-3284D5EB1A56}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{48D3FEAB-4CCC-4815-A3A0-7E1EC046975A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48D3FEAB-4CCC-4815-A3A0-7E1EC046975A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48D3FEAB-4CCC-4815-A3A0-7E1EC046975A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A920E2B-10D0-4910-9A78-3284D5EB1A56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A920E2B-10D0-4910-9A78-3284D5EB1A56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A920E2B-10D0-4910-9A78-3284D5EB1A56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A920E2B-10D0-4910-9A78-3284D5EB1A56}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
