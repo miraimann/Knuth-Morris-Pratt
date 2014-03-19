@@ -6,7 +6,7 @@ namespace KnuthMorrisPratt
 {
     internal class Finder<T> : IFinder<T>
     {
-        private readonly StateMachine _dfa;
+        private readonly int[,] _dfa;
         private readonly Dictionary<T, int> _abc;
         private readonly int _finalState;
 
@@ -20,7 +20,7 @@ namespace KnuthMorrisPratt
                           .Select((value, index) => new { value, index })
                           .ToDictionary(o => o.value, o => o.index);
 
-            _dfa = new StateMachine(_abc.Count, pattern.Length + 1); 
+            _dfa = new int[_abc.Count, pattern.Length + 1]; 
 
             _dfa[0, 0] = 1;
 
@@ -34,6 +34,7 @@ namespace KnuthMorrisPratt
                 i = _dfa[_abc[pattern[j++]], i];
             }
             
+
             Copy(from: i, to: j);
         }
 
