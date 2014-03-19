@@ -13,5 +13,10 @@ namespace KnuthMorrisPratt.Tests
         public IEnumerable<T> Pattern { get; private set; }
 
         public IEnumerable<T> Sequence { get; private set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0}  :  {1}", Pattern, Sequence);
+        }
     }
 }
