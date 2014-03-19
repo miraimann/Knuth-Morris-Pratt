@@ -84,7 +84,7 @@ namespace KnuthMorrisPratt.Tests
                 yield return new TestCaseData(
                     A.ashfdhasfdhasfdhgsafdhgasfdhfashdfhgsafdgas236824e87326ehqshhjzjhxjjxzjhxgjhz)
 
-                    .Returns(true);
+                    .Returns(false);
 
                 yield return new TestCaseData(
                     A.B)
@@ -104,12 +104,12 @@ namespace KnuthMorrisPratt.Tests
                 yield return new TestCaseData(
                     A.fajfchdsfjksakkA)
 
-                    .Returns(false);
+                    .Returns(true);
 
                 yield return new TestCaseData(
                     A.fajfchdsfjksakkAfajfchdsfjksakk)
 
-                    .Returns(false);
+                    .Returns(true);
 
                 yield return new TestCaseData(
                     A.hdghsjdhaksjdhakjshdkjashdjkhskjdhaskjdhskjshdjkashdjkashdjkhasjdhaj)

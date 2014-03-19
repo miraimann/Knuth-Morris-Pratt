@@ -6,6 +6,10 @@ namespace KnuthMorrisPratt
 {
     internal class Finder<T> : IFinder<T>
     {
+        public const int NotFound = -1;
+        private const int CharacterThatIsMissingInThePattern = -1;
+        private const int StartingState = 0;
+
         private readonly int[,] _dfa;
         private readonly Dictionary<T, int> _abc;
         private readonly int _finalState;
@@ -20,9 +24,9 @@ namespace KnuthMorrisPratt
                     .Select((value, index) => new { value, index })
                     .ToDictionary(o => o.value, o => o.index);
 
-            _dfa = new int[_abc.Count, p.Length + 1]; 
+            _dfa = new int[_abc.Count, p.Length + 1];
 
-            _dfa[0, 0] = 1;
+            _dfa[0, StartingState] = 1;
 
             int i = 0, j = 1;
             while (j < p.Length)
@@ -40,40 +44,40 @@ namespace KnuthMorrisPratt
 
         public int FindIn(IEnumerable<T> sequence)
         {
-            var state = 0;
+            var state = StartingState;
             foreach (var o in SelectAbcIndexesFrom(sequence)
                                         .Select((c, i) => new { c, i }))
             {
-                state = _dfa[o.c, state];
+                state = GoNext(o.c, state);
                 if (state == _finalState)
                     return o.i - _finalState + 1;
             }
 
-            return -1;
+            return NotFound;
         }
 
         public int FindLastIn(IEnumerable<T> sequence)
         {
-            var last = -1;
-            var state = 0;
+            var rusult = NotFound;
+            var state = StartingState;
             foreach (var o in SelectAbcIndexesFrom(sequence)
                                         .Select((c, i) => new { c, i }))
             {
-                state = _dfa[o.c, state];
+                state = GoNext(o.c, state);
                 if (state == _finalState)
-                    last = o.i - _finalState + 1;
+                    rusult = o.i - _finalState + 1;
             }
 
-            return last;
+            return rusult;
         }
 
         public IEnumerable<int> FindAllIn(IEnumerable<T> sequence)
         {
-            var state = 0;
+            var state = StartingState;
             foreach (var o in SelectAbcIndexesFrom(sequence)
                                         .Select((c, i) => new { c, i }))
             {
-                state = _dfa[o.c, state];
+                state = GoNext(o.c, state);
                 if (state == _finalState)
                     yield return o.i - _finalState + 1;
             }
@@ -83,15 +87,22 @@ namespace KnuthMorrisPratt
         {
             using (var e = SelectAbcIndexesFrom(sequence).GetEnumerator())
             {
-                int state = 0;
+                int state = StartingState;
                 while (e.MoveNext())
                 {
-                    state = _dfa[e.Current, state];
+                    state = GoNext(e.Current, state);
                     if (state == _finalState) return true;
                 }
 
                 return false;
             }
+        }
+
+        private int GoNext(int c, int state)
+        {
+            return c == CharacterThatIsMissingInThePattern 
+                      ? StartingState 
+                      : _dfa[c, state];
         }
 
         private void Copy(int from, int to)
@@ -102,7 +113,7 @@ namespace KnuthMorrisPratt
 
         private IEnumerable<int> SelectAbcIndexesFrom(IEnumerable<T> sequence)
         {
-            return sequence.Select(c => _abc[c]);
+            return sequence.Select(c => _abc.ContainsKey(c) ? _abc[c] : CharacterThatIsMissingInThePattern);
         }
     }
 }
