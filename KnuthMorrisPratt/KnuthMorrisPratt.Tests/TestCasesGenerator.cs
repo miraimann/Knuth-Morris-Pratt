@@ -587,12 +587,12 @@ namespace KnuthMorrisPratt.Tests
                 yield return new TestCaseData(
                     AA.DDDJJJJ00yfAghytuuuutt11mmmmdttppp5t)
 
-                    .Returns(true);
+                    .Returns(false);
 
                 yield return new TestCaseData(
                     AA.ghytuuuutt11mmmmdDDDJJJJ00yfttppp5tA)
 
-                    .Returns(true);
+                    .Returns(false);
 
                 yield return new TestCaseData(
                     AA.ghytuuuutt11mmmmdDDDJJJJ00yfttppp5tAA)
@@ -647,7 +647,7 @@ namespace KnuthMorrisPratt.Tests
                 yield return new TestCaseData(
                     AA.ghytuuuutt11mmmmdjoADDDJJJJ00yfqmm)
 
-                    .Returns(true);
+                    .Returns(false);
 
                 yield return new TestCaseData(
                     AA.ghytuuuutt11mmmmdrrrrhrhrhrqmmAAAAAAAAyyyg)
