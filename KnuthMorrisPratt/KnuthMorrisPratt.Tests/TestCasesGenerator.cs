@@ -14,7 +14,7 @@ namespace KnuthMorrisPratt.Tests
         {
             get
             {
-#region <|  A  |>
+                #region <|  A  |>
 
                 yield return new TestCaseData(
                     A.___________________________________________________________________________________)
@@ -140,8 +140,10 @@ namespace KnuthMorrisPratt.Tests
                     A.___EMPTY___)
 
                     .Returns(false);
-#endregion
-#region <|  AA |>
+
+                #endregion
+                #region <|  AA |>
+
                 yield return new TestCaseData(
                     AA.________________________________________A)
 
@@ -776,7 +778,8 @@ namespace KnuthMorrisPratt.Tests
                     AA.yyygtAAAAAjoAAtAAAttppp5tAAAAtAtA)
 
                     .Returns(true);
-#endregion
+
+                #endregion
             }
         }
 
