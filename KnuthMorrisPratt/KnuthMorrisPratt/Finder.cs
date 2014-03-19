@@ -103,36 +103,5 @@ namespace KnuthMorrisPratt
         {
             return sequence.Select(c => _abc[c]);
         }
-
-        [System.Diagnostics.DebuggerDisplay("{DebugView}")]
-        private class StateMachine
-        {
-            private readonly int[][] _storage;
-
-            public StateMachine(int abcLenth, int statesCount)
-            {
-                _storage = new int[abcLenth][];
-                for (int i = 0; i < abcLenth; i++)
-                    _storage[i] = new int[statesCount];
-            }
-
-            public int this[int c, int state]
-            {
-                get { return _storage[c][state]; }
-                set { _storage[c][state] = value; }
-            }
-
-            public string DebugView
-            {
-                get
-                {
-                    return string.Join(
-                        Environment.NewLine,
-                        _storage.Select(row => string.Join(
-                                                    "|", 
-                                                    row.Select(o => o.ToString("000")))));  
-                }
-            }
-        }
     }
 }
