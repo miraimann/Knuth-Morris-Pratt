@@ -30,14 +30,14 @@ namespace KnuthMorrisPratt.Tests
         }
 
         [TestCaseSource(typeof(TestCasesProvider.FindLast), "All__TestCases")]
-        public int FindLastIn_Test()
+        public int FindLastIn_Test(Case<char> @case)
         {
             return _finderFactory.CreateFrom(@case.Pattern)
                                  .FindLastIn(@case.Sequence);   
         }
 
         [TestCaseSource(typeof(TestCasesProvider.FindAll), "All__TestCases")]
-        public IEnumerable<int> FindAllIn_Test()
+        public IEnumerable<int> FindAllIn_Test(Case<char> @case)
         {
             return _finderFactory.CreateFrom(@case.Pattern)
                                  .FindAllIn(@case.Sequence);   
