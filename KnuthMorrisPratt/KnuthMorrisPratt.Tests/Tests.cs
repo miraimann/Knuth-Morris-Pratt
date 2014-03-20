@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using StringSearch;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,8 +14,8 @@ namespace KnuthMorrisPratt.Tests
     {
         private readonly IFinderFactory<char> _finderFactory =
                       new FinderFactory<char>();
-        
-        [TestCaseSource(typeof(TestCasesGenerator), "ExistsIn_TestCases")]
+
+        [TestCaseSource(typeof(TestCasesProvider.Exists), "All__TestCases")]
         public bool ExistsIn_Test(Case<char> @case)
         {
             return _finderFactory.CreateFrom(@case.Pattern)
