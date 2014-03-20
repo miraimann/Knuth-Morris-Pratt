@@ -22,9 +22,11 @@ namespace KnuthMorrisPratt.Tests
                                  .ExistsIn(@case.Sequence);   
         }
 
-        public int FindIn_Test()
+        [TestCaseSource(typeof(TestCasesProvider.FindFirst), "All__TestCases")]
+        public int FindIn_Test(Case<char> @case)
         {
-            throw new NotImplementedException();
+            return _finderFactory.CreateFrom(@case.Pattern)
+                                 .FindIn(@case.Sequence);   
         }
 
         public int FindLastIn_Test()
