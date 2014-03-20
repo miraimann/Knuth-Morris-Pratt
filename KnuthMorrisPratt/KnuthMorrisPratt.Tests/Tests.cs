@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using StringSearch;
+using SSCases;
 using System.Collections.Generic;
 
 namespace KnuthMorrisPratt.Tests
