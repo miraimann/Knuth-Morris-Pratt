@@ -29,19 +29,18 @@ namespace KnuthMorrisPratt.Tests
                                  .FindIn(@case.Sequence);   
         }
 
+        [TestCaseSource(typeof(TestCasesProvider.FindLast), "All__TestCases")]
         public int FindLastIn_Test()
         {
-            throw new NotImplementedException();
+            return _finderFactory.CreateFrom(@case.Pattern)
+                                 .FindLastIn(@case.Sequence);   
         }
 
+        [TestCaseSource(typeof(TestCasesProvider.FindAll), "All__TestCases")]
         public IEnumerable<int> FindAllIn_Test()
         {
-            throw new NotImplementedException();
-        }
-
-        private static class A
-        {
-
+            return _finderFactory.CreateFrom(@case.Pattern)
+                                 .FindAllIn(@case.Sequence);   
         }
     }
 }
