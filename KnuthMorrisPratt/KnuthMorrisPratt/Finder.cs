@@ -38,7 +38,6 @@ namespace KnuthMorrisPratt
                 i = _dfa[_abc[p[j++]], i];
             }
             
-
             Copy(from: i, to: j);
         }
 
