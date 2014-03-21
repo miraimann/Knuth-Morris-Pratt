@@ -78,7 +78,8 @@ namespace KnuthMorrisPratt
             {
                 state = GoNext(c, state);
                 if (state == _finalState)
-                    yield return i++ - _finalState + 1;
+                    yield return i - _finalState + 1;
+                ++i;
             }
         }
 
