@@ -11,31 +11,31 @@ namespace KnuthMorrisPratt.Tests
                       new FinderFactory<char>();
 
         [TestCaseSource(typeof(AllCases), "ForExists")]
-        public bool ExistsIn_Test(Case<char> @case)
+        public bool ExistsIn_Test(string pattern, string sequence)
         {
-            return _finderFactory.CreateFrom(@case.Pattern)
-                                 .ExistsIn(@case.Sequence);   
+            return _finderFactory.CreateFrom(pattern)
+                                 .ExistsIn(sequence);   
         }
 
         [TestCaseSource(typeof(AllCases), "ForFindFirst")]
-        public int FindIn_Test(Case<char> @case)
+        public int FindIn_Test(string pattern, string sequence)
         {
-            return _finderFactory.CreateFrom(@case.Pattern)
-                                 .FindIn(@case.Sequence);   
+            return _finderFactory.CreateFrom(pattern)
+                                 .FindIn(sequence);   
         }
 
         [TestCaseSource(typeof(AllCases), "ForFindLast")]
-        public int FindLastIn_Test(Case<char> @case)
+        public int FindLastIn_Test(string pattern, string sequence)
         {
-            return _finderFactory.CreateFrom(@case.Pattern)
-                                 .FindLastIn(@case.Sequence);   
+            return _finderFactory.CreateFrom(pattern)
+                                 .FindLastIn(sequence);   
         }
 
         [TestCaseSource(typeof(AllCases), "ForFindAll")]
-        public IEnumerable<int> FindAllIn_Test(Case<char> @case)
+        public IEnumerable<int> FindAllIn_Test(string pattern, string sequence)
         {
-            return _finderFactory.CreateFrom(@case.Pattern)
-                                 .FindAllIn(@case.Sequence);   
+            return _finderFactory.CreateFrom(pattern)
+                                 .FindAllIn(sequence);   
         }
     }
 }
